@@ -15,7 +15,7 @@ while continu:
         if choix == "o":
             exit()
     elif solde == 0:
-        print("Le jeux est terminé !!")
+        print("Votre solde est a zero le jeux est terminé !!")
         exit()
     else:
         print("le jeux commence")
@@ -56,7 +56,7 @@ while continu:
                          gains = ceil(mise*1.5)
                          solde = solde + gains
                     else:
-                        print("Vous avez perdu !")
+                        print("Vous avez perdu ! Votre solde est de : ", solde)
         except ValueError:
             print("Veuillez entrer un nombre\n")
         except AssertionError:
