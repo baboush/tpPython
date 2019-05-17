@@ -2,7 +2,7 @@
 
 import os
 import donnees
-
+import pickle
 
 def creerFichier():
     if os.path.isfile("scores.txt") == False:
@@ -11,6 +11,21 @@ def creerFichier():
         fichier = open("scores.txt", "x")
         fichier.close()
     else:
-        print("Un ichier scores à été trouvé")
+        print("Un fichier scores à été trouvé")
         pass
+
+def lireFichier():
+    try:
+        with open("scores.txt", "rb") as fichier:
+            lecture_fichier = pickle.load(fichier)
+            print(lecture_fichier)
+        fichier.close()
+    except EOFError:
+        print("le fichier est vide")
+        pass
+    
+def enregistrerJoueur(nom):
+    with open("scores.txt", "ab") as fichier:
+        ecriture = pickle.dump(nom, fichier)
+    fichier.close()
 
