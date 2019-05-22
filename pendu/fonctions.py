@@ -34,7 +34,7 @@ def enregistrerJoueur(nom):
     fichier.close()
 
 
-def randomMot():
+def randomMot(liste, mot_cache):
     mot = random.choice(donnees.MOTS)  # selection mot au hasard
     liste = [i for i in mot]
     index = 0
@@ -42,4 +42,26 @@ def randomMot():
     while index < len(liste):  # cache le mot
         mot_cache.append('*')
         index += 1
-    return liste, mot_cache
+    mot_decouvert = ''.join(liste)
+    mot_etoile = ''.join(mot_cache)
+    return mot_decouvert, mot_etoile
+
+
+def trouverMot(mot_decouvert, mot_etoile):
+    mot_decouvert_split = mot_decouvert
+    mot_etoile_split = [i for i in mot_etoile]
+    i = donnees.NBR_CHANCES
+    while i > 0:
+        lettre_user = str(input("Entrée une lettre : "))
+        index = 0
+        while index < len(mot_decouvert_split):
+            if lettre_user == mot_decouvert_split[index]:
+                print("vous avez trouver une lettre")
+                mot_etoile_split[index] = lettre_user
+            index += 1
+        mot_etoile = "".join(mot_etoile_split)
+        print(mot_etoile)
+        if mot_etoile == mot_decouvert_split:
+            print("vous avez trouvé le mot")
+            return i
+        i -= 1
