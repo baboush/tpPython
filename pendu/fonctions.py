@@ -19,24 +19,23 @@ def creerFichier():
 def lireFichier():
     try:
         with open("scores.txt", "rb") as fichier:
-            lecture_fichier = pickle.load(fichier)
-            print(lecture_fichier)
+            donnees.JOUEURS = pickle.load(fichier)
         fichier.close()
     except EOFError:
         print("le fichier est vide")
         pass
 
 
-def enregistrerJoueur(nom):
-    with open("scores.txt", "ab") as fichier:
-        ecriture = pickle.dump(nom, fichier)
+def enregistrerJoueur():
+    with open("scores.txt", "wb") as fichier:
+        ecriture = pickle.dump(donnees.JOUEURS, fichier)
         print(ecriture)
     fichier.close()
 
 
 def randomMot(liste, mot_cache):
     mot = random.choice(donnees.MOTS)  # selection mot au hasard
-    liste = [i for i in mot]
+    liste = [i for i in mot]  # on transforme le mot en liste
     index = 0
     mot_cache = []
     while index < len(liste):  # cache le mot
@@ -47,7 +46,7 @@ def randomMot(liste, mot_cache):
     return mot_decouvert, mot_etoile
 
 
-def trouverMot(mot_decouvert, mot_etoile):
+def trouverMot(mot_decouvert, mot_etoile, nom):
     mot_decouvert_split = mot_decouvert
     mot_etoile_split = [i for i in mot_etoile]
     i = donnees.NBR_CHANCES
@@ -63,5 +62,19 @@ def trouverMot(mot_decouvert, mot_etoile):
         print(mot_etoile)
         if mot_etoile == mot_decouvert_split:
             print("vous avez trouvé le mot")
+            score = donnees.JOUEURS[nom] + i
+            print(score)
+            donnees.JOUEURS[nom] = score
             return i
         i -= 1
+
+
+def lireJoueur(nom, score):
+    nom = input("Entrer le nom du joueur : ")
+    if nom in donnees.JOUEURS:
+        print("Joueur {}, score: {}".format(nom, donnees.JOUEURS[nom]))
+    else:
+        donnees.JOUEURS[nom] = 0
+        print("Joueur {}, score: {}".format(nom, donnees.JOUEURS[nom]))
+    score = donnees.JOUEURS[nom]
+    return nom, score
